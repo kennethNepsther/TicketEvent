@@ -52,7 +52,7 @@ Welcome to Event Manager, the complete solution for event management and ticket 
 
 2 - Install Mysql database ✅
 
-3 - Mysql database  on de port 3306 and create schema: ticketEventBD ✅
+3 - Mysql database  on de port 3306 and create schema: event_managementDB_tst ✅
 
 4 - Run `mvn clean install` to install dependencies ✅
 

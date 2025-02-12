@@ -1,0 +1,17 @@
+###configuration########
+spring:
+  profiles:
+     active: dev
+    #active: test
+    #active: prod
+  application:
+    name: Event_Manager
+
+
+
+
+
+
+
+
+

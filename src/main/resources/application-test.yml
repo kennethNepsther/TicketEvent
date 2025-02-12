@@ -1,0 +1,49 @@
+###configuration########
+server:
+  port: 9092
+  servlet:
+    context-path: /api.event_management/v1
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/event_managementDB_tst
+    #url: jdbc:mysql://localhost:3306/ticket_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      connection-timeout: 30000
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.hibernate.format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+    #database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+
+#  sql:
+#   init:
+#   mode: always
+#   continue-on-error: true
+#   schema-locations: schema.sql   #classpath:/schema.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

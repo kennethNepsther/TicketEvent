@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 import static com.ticketevent.util.Helper.addIdToCurrentUrlPath;
@@ -40,9 +39,9 @@ public class EventController {
     @PostMapping
     public ResponseEntity<Object> saveEvent(@Valid @RequestBody EventRequestDto eventRequestDto) {
         EventModel event = eventService.createEvent(eventRequestDto.createEventRequest());
-        log.info( "{}  Ticket saved successfully " ,event.getName());
+        log.info( "{}  Ticket saved successfully " ,event.getEventName());
         return ResponseEntity.created(addIdToCurrentUrlPath(String.valueOf(event.getEventId())))
-                .body("Evento  "+ event.getName() +" criado  com  successo");
+                .body("Evento  "+ event.getEventName() +" criado  com  successo");
     }
 
     @PutMapping

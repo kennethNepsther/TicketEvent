@@ -42,6 +42,7 @@ public class EventModel implements Serializable {
     private Integer totalCapacity;
     private Integer registeredParticipants = 0;
     private Boolean isActive = true;
+    @Enumerated(EnumType.STRING)
     private EventCategory eventCategory;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate eventDate;

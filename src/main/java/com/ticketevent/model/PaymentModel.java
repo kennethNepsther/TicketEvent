@@ -9,27 +9,27 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_participant")
+@Table(name = "tb_payment")
 @Accessors(chain = true)
-@EqualsAndHashCode(of = "id")
-public class ParticipantModel implements Serializable {
+@EqualsAndHashCode(of = "paymentId")
+public class PaymentModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private String password;
+    private UUID paymentId;
+    private String paymentType;
+    private String paymentReferenceId;
+    private BigDecimal paymentAmount;
+    private String paymentStatus;
+    private LocalDateTime paymentDate;
 
-   /* @ManyToOne
-    private EventModel event;*/
 }

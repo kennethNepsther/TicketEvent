@@ -15,21 +15,16 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_participant")
+@Table(name = "tb_organizer")
 @Accessors(chain = true)
-@EqualsAndHashCode(of = "id")
-public class ParticipantModel implements Serializable {
+@EqualsAndHashCode(of = "organizerId")
+public class Organizer implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private String password;
-
-   /* @ManyToOne
-    private EventModel event;*/
+    private UUID organizerId;
+    private String organizerName;
+    private String organizerEmail;
+    private String organizerPhone;
 }

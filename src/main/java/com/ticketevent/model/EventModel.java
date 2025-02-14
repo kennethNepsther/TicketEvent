@@ -32,8 +32,6 @@ public class EventModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID eventId;
     private String eventName;
-    private String organizerName;
-    private String organizerContact;
     private String imagePath;
     @Column(columnDefinition = "text")
     private String eventDescription;
@@ -48,8 +46,6 @@ public class EventModel implements Serializable {
     private LocalDate eventDate;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
-    @JsonFormat(pattern = "HH:mm")
-    private LocalTime endTime;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

@@ -32,7 +32,7 @@ public class TicketServiceImpl implements ITicketService {
             throw new RuntimeException("Event is full");
         }
 
-       /* participant = participantRepository.save(participant);
+        participant = participantRepository.save(participant);
 
         var ticket = new TicketModel();
         ticket.setEventModel(event);
@@ -42,8 +42,7 @@ public class TicketServiceImpl implements ITicketService {
         eventRepository.save(event);
 
         return ticketRepository.save(ticket);
-        */
-        return null;
+
     }
 
     public byte[] generateQRCode(String qrCode) throws WriterException {

@@ -1,10 +1,9 @@
 package com.ticketevent.service;
 
-import com.ticketevent.model.ParticipantModel;
-import com.ticketevent.model.TicketModel;
+import com.ticketevent.entity.TicketEntity;
 
 import java.util.UUID;
 
 public interface ITicketService {
-    TicketModel generateTicket(UUID eventId, ParticipantModel participant);
+    TicketEntity generateTicket(UUID eventId, ParticipantModel participant);
 }

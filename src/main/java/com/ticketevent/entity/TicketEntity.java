@@ -1,4 +1,4 @@
-package com.ticketevent.model;
+package com.ticketevent.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,21 +9,32 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_admin")
+@Table(name = "tb_ticket")
 @Accessors(chain = true)
 @EqualsAndHashCode(of = "id")
-public class Adm implements Serializable {
+public class TicketEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String qrCode = UUID.randomUUID().toString();
+    private LocalDateTime generatedAt = LocalDateTime.now();
+    private LocalDateTime usedAt;
+    private Boolean isUsed = false;
+    private Boolean isCancelled = false;
+
+   /* @OneToOne
+    private ParticipantModel participant;
+
+    @ManyToOne
+    private EventModel event;*/
 }

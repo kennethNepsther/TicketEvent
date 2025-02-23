@@ -7,7 +7,7 @@ spring:
     #active: test
     #active: prod
   application:
-    name: Event_Manager
+    name: Event_Management-App
 
 
 

@@ -1,19 +1,18 @@
 package com.ticketevent.util;
 
 import com.ticketevent.exceptions.exception.BadRequestException;
-import com.ticketevent.exceptions.exception.ObjectNotFoundException;
-import com.ticketevent.model.EventModel;
 import lombok.NoArgsConstructor;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
-
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 
 @NoArgsConstructor
@@ -57,6 +56,45 @@ public class Helper {
         }
         return "DT-" + getNextNumber + result.toString();
     }
+
+
+
+    public static byte[] compressImage(byte[] data) {
+        Deflater deflater = new Deflater();
+        deflater.setLevel(Deflater.BEST_COMPRESSION);
+        deflater.setInput(data);
+        deflater.finish();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] tmp = new byte[4*1024];
+        while (!deflater.finished()) {
+            int size = deflater.deflate(tmp);
+            outputStream.write(tmp, 0, size);
+        }
+        try {
+            outputStream.close();
+        } catch (Exception ignored) {
+        }
+        return outputStream.toByteArray();
+    }
+
+    public static byte[] decompressImage(byte[] data) {
+        Inflater inflater = new Inflater();
+        inflater.setInput(data);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        byte[] tmp = new byte[4*1024];
+        try {
+            while (!inflater.finished()) {
+                int count = inflater.inflate(tmp);
+                outputStream.write(tmp, 0, count);
+            }
+            outputStream.close();
+        } catch (Exception ignored) {
+        }
+        return outputStream.toByteArray();
+    }
+
+
 
 
 }

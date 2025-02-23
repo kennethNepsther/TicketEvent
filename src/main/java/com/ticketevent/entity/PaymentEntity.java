@@ -1,4 +1,4 @@
-package com.ticketevent.model;
+package com.ticketevent.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Table(name = "tb_payment")
 @Accessors(chain = true)
 @EqualsAndHashCode(of = "paymentId")
-public class PaymentModel implements Serializable {
+public class PaymentEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id

@@ -17,7 +17,7 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@Table(name = "tb_users")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity extends Auditable implements Serializable {
     @Serial
@@ -40,7 +40,7 @@ public class UserEntity extends Auditable implements Serializable {
     private boolean multiFactorAuthEnabled;
     @JsonIgnore
     private String qrCodeSecret;
-    @Column(columnDefinition = "TEXT")
+   // @Column(columnDefinition = "text")
     private String qrCodeImageUri;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

@@ -15,11 +15,11 @@ import static java.util.UUID.randomUUID;
 @Getter
 @Setter
 @Entity
-@Builder
+//@Builder
 @ToString
 @NoArgsConstructor
 //@AllArgsConstructor
-@Table(name = "confirmations")
+@Table(name = "tb_confirmations")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConfirmationEntity extends Auditable{
     private String key;
@@ -30,7 +30,6 @@ public class ConfirmationEntity extends Auditable{
     @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("user_id")
     private UserEntity userEntity;
-
     public ConfirmationEntity(String password, UserEntity userEntity) {
         this.key = randomUUID().toString();
         this.userEntity = userEntity;

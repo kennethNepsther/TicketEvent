@@ -11,11 +11,11 @@ import static jakarta.persistence.FetchType.EAGER;
 @Getter
 @Setter
 @Entity
-@Builder
+//@Builder
 @ToString
 @NoArgsConstructor
 //@AllArgsConstructor
-@Table(name = "credentials")
+@Table(name = "tb_credentials")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CredentialEntity extends Auditable{
     private String password;

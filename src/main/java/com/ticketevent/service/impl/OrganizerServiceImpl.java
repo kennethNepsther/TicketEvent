@@ -1,4 +1,4 @@
-package com.ticketevent.service.implementation;
+package com.ticketevent.service.impl;
 
 import com.ticketevent.exceptions.exception.BadRequestException;
 import com.ticketevent.exceptions.exception.ObjectNotFoundException;

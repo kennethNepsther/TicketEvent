@@ -1,4 +1,4 @@
-package com.ticketevent.service.implementation;
+package com.ticketevent.service.impl;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;

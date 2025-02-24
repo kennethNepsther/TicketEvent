@@ -10,5 +10,9 @@ public class Constants {
     public static final String ORGANIZER_AUTHORITY = "event:create,event:read,event:update,event:delete";
 
 
+    public static final String NEW_USER_ACCOUNT_VERIFICATION = "New Account Verification";
+    public static final String PASSWORD_RESET_REQUEST = "Password Reset Request";
+
+
 
 }

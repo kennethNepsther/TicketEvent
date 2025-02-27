@@ -2,6 +2,7 @@ package com.ticketevent.util;
 
 import com.ticketevent.exceptions.exception.BadRequestException;
 import lombok.NoArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.ByteArrayOutputStream;
@@ -95,6 +96,17 @@ public class Helper {
     }
 
 
+    String generateUsername(String name) {
+        String[] partsOfName = name.split(" ");
 
+        if (partsOfName.length >= 2) {
+            String firstName = partsOfName[0];
+            String lastName = partsOfName[partsOfName.length - 1];
+            name = firstName.toLowerCase() + "." + lastName.toLowerCase();
+            return name;
+        }else
+            throw new DataIntegrityViolationException("Por favor, insira um nome completo com pelo menos dois nomes.");
+
+    }
 
 }

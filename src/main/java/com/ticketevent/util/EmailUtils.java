@@ -9,7 +9,7 @@ public class EmailUtils {
 
     }
     private static String getVerificationUrl(String host, String token) {
-        return "http://" + host + "/verify/account?token=" + token;
+        return "http://" + host + "/user/verify/account?token=" + token;
     }
 
 
@@ -25,4 +25,15 @@ public class EmailUtils {
     private static String getVerificationPasswordUrl(String host, String token) {
         return "http://" + host + "/verify/password?token=" + token;
     }
+
+    public static String mailContentVerification(String name, String host, String token){
+        return "<p> Hi, "+ name+ ", </p>"+
+                "<p>Thank you for registering with us,"+
+                "Please, follow the link below to complete your registration.</p>"+
+                "<a href=\"" +getVerificationUrl(host, token)+ "\">Verify your email to activate your account</a>"+
+                "<p> Thank you <br> Users Registration Portal Service";
+    }
+
+
+
 }

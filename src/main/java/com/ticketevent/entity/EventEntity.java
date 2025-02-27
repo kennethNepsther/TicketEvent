@@ -1,4 +1,4 @@
-package com.ticketevent.model;
+package com.ticketevent.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ticketevent.enums.EventCategory;
@@ -24,7 +24,7 @@ import java.util.UUID;
 @Table(name = "tb_event")
 @Accessors(chain = true)
 @EqualsAndHashCode(of = "eventId")
-public class EventModel implements Serializable {
+public class EventEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,6 @@ public class EventModel implements Serializable {
     private UUID eventId;
     private String eventName;
     private String imagePath;
-    @Column(columnDefinition = "text")
     private String eventDescription;
     private String eventLocation;
     private BigDecimal eventPrice = BigDecimal.ZERO;
@@ -46,7 +45,14 @@ public class EventModel implements Serializable {
     private LocalDate eventDate;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
+    @Lob
+    @Column(name = "imagedata")
+    private byte[] imageData;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    /*@ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "organizerId", nullable = false)
+    private UserEntity organizer;*/
 
 }

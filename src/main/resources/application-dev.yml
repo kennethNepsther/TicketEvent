@@ -1,35 +1,30 @@
-###configuration########
-server:
-  port: 9091
-  servlet:
-    context-path: /api.event_management/v1
-    ##swagger-path:/api.event_management/v1/swagger-ui/index.html#/
-spring:
-  datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/event_managementDB_dev
-    #url: jdbc:mysql://localhost:3306/event_managementDB?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 10
-      connection-timeout: 30000
-
-  jpa:
-    show-sql: true
-    properties:
-      hibernate.hibernate.format_sql: true
-    hibernate:
-      ddl-auto: create-drop
-    open-in-view: false
-
-
+# configurations
+ACTIVE_PROFILE: dev
+SERVER_PORT: 9091
+#DATABASE
+DATABASE_USERNAME: root
+DATABASE_PASSWORD: root
+DATABASE: event_managementDB_dev
+DATABASE_HOST: localhost
+DATABASE_PORT: 3306
+JDBC_CONNECTION: jdbc:mysql
+#DATABASE_DIALECT: org.hibernate.dialect.MySQLDialect
+DDL_AUTO: create
+DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
 #  sql:
 #   init:
 #   mode: always
-#   continue-on-error: true
+#   continue-on-error: false
 #   schema-locations: schema.sql   #classpath:/schema.sql
+#   data-locations: data.sql   #classpath:/data.sql
+
+#MAIL
+MAIL_HOST: sandbox.smtp.mailtrap.io
+MAIL_PORT: 587
+MAIL_USERNAME: bec764e9424d03
+MAIL_PASSWORD: d89599efdfac67
+VERIFY_EMAIL_HOST: http://localhost.com
+
 
 
 

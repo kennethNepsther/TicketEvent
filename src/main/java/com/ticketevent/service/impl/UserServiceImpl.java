@@ -23,7 +23,6 @@ import java.util.UUID;
 
 import static com.ticketevent.constant.Constants.INVALID_TOKEN_MESSAGE;
 import static com.ticketevent.constant.Constants.TOKEN_ALREADY_EXPIRED;
-import static com.ticketevent.util.UrlUtils.applicationUrl;
 
 @Slf4j
 @Service
@@ -88,7 +87,9 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-
+    public String applicationUrl(HttpServletRequest request) {
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }
 
     @Override
     public void saveUserVerificationToken(UserEntity user, String token) {
@@ -113,18 +114,6 @@ public class UserServiceImpl implements IUserService {
         userRepository.save(user);
         return "valid";
     }
-
-    @Override
-    public VerificationTokenEntity generateNewVerificationToken(String oldToken) {
-
-        var oldTokenToRenew = tokenRepository.findByToken(oldToken);
-        var verificationTokenTime = new VerificationTokenEntity();
-        oldTokenToRenew.setToken(UUID.randomUUID().toString());
-        oldTokenToRenew.setExpirationTime(verificationTokenTime.getExpirationTime());
-        return tokenRepository.save(oldTokenToRenew);
-    }
-
-
 }
 
 

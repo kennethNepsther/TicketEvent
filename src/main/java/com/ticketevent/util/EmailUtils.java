@@ -1,8 +1,5 @@
 package com.ticketevent.util;
 
-import static com.ticketevent.util.UrlUtils.getVerificationPasswordUrl;
-import static com.ticketevent.util.UrlUtils.getVerificationUrl;
-
 public class EmailUtils {
 
     public static String getEmailMessage(String name, String host, String token){
@@ -11,12 +8,22 @@ public class EmailUtils {
                 getVerificationUrl(host, token) + "\n\nThe Support Team";
 
     }
+    private static String getVerificationUrl(String host, String token) {
+        return "http://" + host + "/user/verify/account?token=" + token;
+    }
+
+
+
 
     public static String getResetPasswordMessage(String name, String host, String token){
         return "Hello " + name + ",\n\n" +
                 "Your password has been changed. Please click on de link below to reset your password.\n\n" +
                 getVerificationPasswordUrl(host, token) + "\n\nThe Support Team";
 
+    }
+
+    private static String getVerificationPasswordUrl(String host, String token) {
+        return "http://" + host + "/verify/password?token=" + token;
     }
 
     public static String mailContentVerification(String name, String host, String token){

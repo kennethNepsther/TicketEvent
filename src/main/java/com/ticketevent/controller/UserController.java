@@ -6,6 +6,7 @@ import com.ticketevent.entity.dto.response.UserResponse;
 import com.ticketevent.entity.token.VerificationTokenEntity;
 import com.ticketevent.exceptions.exception.ObjectNotFoundException;
 import com.ticketevent.repository.IVerificationTokenRepository;
+import com.ticketevent.service.IEmailService;
 import com.ticketevent.service.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,8 +23,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.ticketevent.constant.Constants.*;
-import static com.ticketevent.util.Helper.addIdToCurrentUrlPath;
 import static com.ticketevent.util.Helper.stringToUUID;
+import static com.ticketevent.util.UrlUtils.addIdToCurrentUrlPath;
+import static com.ticketevent.util.UrlUtils.applicationUrl;
+
 
 @Slf4j
 @RestController
@@ -34,6 +37,7 @@ import static com.ticketevent.util.Helper.stringToUUID;
 public class UserController {
 
     final IUserService userService;
+    final IEmailService mailService;
     final IVerificationTokenRepository verificationTokenRepository;
 
 
@@ -96,4 +100,19 @@ public class UserController {
         }
         return INVALID_TOKEN_MESSAGE;
     }
+
+    @GetMapping("/resendVerificationToken")
+    public String resendVerificationToken(@RequestParam("token") String oldToken, final HttpServletRequest request){
+        var verificationToken = userService.generateNewVerificationToken(oldToken);
+        var user = verificationToken.getUser();
+
+       // mailService.resendVerificationEmail(user, applicationUrl(request), verificationToken);
+        return NEW_VERIFICATION_TOKEN_MESSAGE;
+
+
+    }
+
+
+
+
 }

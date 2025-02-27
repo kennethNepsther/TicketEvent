@@ -1,8 +1,42 @@
-###configuration########
-server:
-  port: 9093
-  servlet:
-    context-path: /api.event_management/v1
+# server
+ACTIVE_PROFILE: prod
+SERVER_PORT: 9093
+#DATABASE
+DATABASE_USERNAME: root
+DATABASE_PASSWORD: root
+DATABASE: event_managementDB_prod
+DATABASE_HOST: localhost
+DATABASE_PORT: 5432
+JDBC_CONNECTION: jdbc:postgresql
+#DATABASE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+DDL_AUTO: update
+DRIVER_CLASS_NAME: org.postgresql.Driver
+#  sql:
+#   init:
+#   mode: always
+#   continue-on-error: false
+#   schema-locations: schema.sql   #classpath:/schema.sql
+#   data-locations: data.sql   #classpath:/data.sql
+
+MAIL_HOST: smtp.gmail.com
+MAIL_PORT: 587
+MAIL_USERNAME: your_email@gmail.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 spring:
   datasource:

@@ -1,43 +1,19 @@
-###configuration########
-server:
-  port: 9092
-  servlet:
-    context-path: /api.event_management/v1
+# server
+ACTIVE_PROFILE: test
+SERVER_PORT: 9095
 spring:
   datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/event_managementDB_tst
-    #url: jdbc:mysql://localhost:3306/ticket_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 10
-      connection-timeout: 30000
-
+    url: jdbc:h2:mem:event_managementDB
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
   jpa:
-    show-sql: true
-    properties:
-      hibernate.hibernate.format_sql: true
-    hibernate:
-      ddl-auto: create-drop
-    #database-platform: org.hibernate.dialect.MySQLDialect
-    open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
 
 
-#  sql:
-#   init:
-#   mode: always
-#   continue-on-error: true
-#   schema-locations: schema.sql   #classpath:/schema.sql
-
-
-
-
-
-
-
-
+MAIL_HOST: smtp.gmail.com
+MAIL_PORT: 587
+MAIL_USERNAME: your_email@gmail.com
 
 
 

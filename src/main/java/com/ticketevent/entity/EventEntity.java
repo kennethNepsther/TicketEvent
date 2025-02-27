@@ -33,7 +33,6 @@ public class EventEntity implements Serializable {
     private UUID eventId;
     private String eventName;
     private String imagePath;
-    @Column(columnDefinition = "text")
     private String eventDescription;
     private String eventLocation;
     private BigDecimal eventPrice = BigDecimal.ZERO;
@@ -47,13 +46,13 @@ public class EventEntity implements Serializable {
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
     @Lob
-    @Column(name = "imagedata",columnDefinition = "LONGBLOB")
+    @Column(name = "imagedata")
     private byte[] imageData;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    /*@ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "organizerId", nullable = false)
-    private UserEntity organizer;
+    private UserEntity organizer;*/
 
 }

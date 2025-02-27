@@ -1,7 +1,6 @@
 package com.ticketevent.util;
 
 import com.ticketevent.exceptions.exception.BadRequestException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -33,7 +32,12 @@ public class Helper {
     }
 
 
-
+    public static URI addIdToCurrentUrlPath(String id) {
+        return ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
+    }
 
     public static String currencyFormat(BigDecimal value) {
         NumberFormat number = NumberFormat.getInstance(new Locale("pt", "BRL"));
@@ -104,8 +108,5 @@ public class Helper {
             throw new DataIntegrityViolationException("Por favor, insira um nome completo com pelo menos dois nomes.");
 
     }
-
-
-
 
 }

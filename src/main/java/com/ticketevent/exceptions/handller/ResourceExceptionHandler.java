@@ -4,9 +4,7 @@ package com.ticketevent.exceptions.handller;
 
 import com.ticketevent.exceptions.error.StandardError;
 import com.ticketevent.exceptions.error.ValidationError;
-import com.ticketevent.exceptions.exception.BadRequestException;
-import com.ticketevent.exceptions.exception.ObjectNotFoundException;
-import com.ticketevent.exceptions.exception.UserAlreadyExistsException;
+import com.ticketevent.exceptions.exception.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +46,24 @@ public class ResourceExceptionHandler {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(BadCredentialException.class)
+    public ResponseEntity<StandardError> credentialInvalidException(BadCredentialException credentialInvalid) {
+        StandardError errorMessage = new StandardError(System.currentTimeMillis(), HttpStatus.UNAUTHORIZED.value(), credentialInvalid.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+    }
+
+    @ExceptionHandler(RestClientTimeOutException.class)
+    public ResponseEntity<StandardError> restClientException(RestClientTimeOutException restClientTimeOutException) {
+        StandardError errorMessage = new StandardError(System.currentTimeMillis(), HttpStatus.REQUEST_TIMEOUT.value(), restClientTimeOutException.getMessage());
+        return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(errorMessage);
+    }
+/*
+       @ExceptionHandler(UserDisabledException.class)
+    public ResponseEntity<StandardError> userDisabledException(UserDisabledException userDisabled) {
+        StandardError errorMessage = new StandardError(System.currentTimeMillis(), HttpStatus.UNAUTHORIZED.value(), userDisabled.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+    }*/
 
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

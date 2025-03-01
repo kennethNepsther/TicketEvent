@@ -49,16 +49,6 @@ spring:
     locations: classpath:db/migration
     table: event_management_schema_history
 
-  jackson:
-    default-property-inclusion: non_null
-    serialization:
-      fail-on-empty-beans: false
-      close-closeable: true
-      flush-after-write-value: true
-      write-date-keys-as-timestamps: false
-    deserialization:
-      fail-on-unknown-properties: false
-
   mail:
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
@@ -78,6 +68,12 @@ spring:
       verify:
         host: ${VERIFY_EMAIL_HOST}
 
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          public-key-location: public.pem
+          private-key-location: chave.key
 
 
 

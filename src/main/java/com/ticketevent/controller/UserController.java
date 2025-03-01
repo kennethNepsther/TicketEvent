@@ -25,7 +25,6 @@ import java.util.Optional;
 import static com.ticketevent.constant.Constants.*;
 import static com.ticketevent.util.Helper.stringToUUID;
 import static com.ticketevent.util.UrlUtils.addIdToCurrentUrlPath;
-import static com.ticketevent.util.UrlUtils.applicationUrl;
 
 
 @Slf4j
@@ -41,7 +40,7 @@ public class UserController {
     final IVerificationTokenRepository verificationTokenRepository;
 
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<UserResponse>> findAll() {
         List<UserEntity> users = userService.getAllUsers();
         return ResponseEntity.ok(users.stream().map(UserResponse::new).toList());

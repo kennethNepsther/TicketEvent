@@ -4,14 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum ERole {
-    ADMIN("admin"),
-    PARTICIPANT("participant" ),
-    ORGANIZER("organizer");
+    ADMIN(1L),
+    ORGANIZER(2L);
 
-    private final String role;
+   final long roleId;
 
-    ERole(String role) {
-        this.role = role;
+    ERole(long roleId) {
+        this.roleId = roleId;
     }
 
 

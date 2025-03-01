@@ -21,5 +21,9 @@ public class Constants {
     public static final String USER_ALREADY_EXIST_MESSAGE=  "Erro ao salvar utilizador, o email ou o número de telefone já existe";
 
 
+    public static final String[] UN_SECURED_URLs = {"/login", "/user/all", "/events/**"};
+    public static final String[] ADMIN_WHITELIST = {"/admin/**", "/user/**"};
+
+
 
 }

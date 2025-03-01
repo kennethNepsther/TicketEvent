@@ -1,7 +1,6 @@
 package com.ticketevent.service.impl;
 
 import com.ticketevent.entity.UserEntity;
-import com.ticketevent.enums.ERole;
 import com.ticketevent.event.RegistrationCompleteEvent;
 import com.ticketevent.repository.IUserRepository;
 import com.ticketevent.repository.IVerificationTokenRepository;
@@ -48,7 +47,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Optional<UserEntity> getUserByEmail(String email) {
-        return userRepository.findByEmail(email.toLowerCase());
+        return userRepository.findByEmailIgnoreCase(email.toLowerCase());
     }
 
     @Override
@@ -65,7 +64,7 @@ public class UserServiceImpl implements IUserService {
             throw new DataIntegrityViolationException("O número de telefone".concat(user.getPhoneNumber()) + "já existe");
         }
 
-        user.setRole(ERole.ADMIN);
+        //user.setRoles(ERole.ADMIN);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -81,7 +80,7 @@ public class UserServiceImpl implements IUserService {
             throw new DataIntegrityViolationException("O número de telefone".concat(user.getPhoneNumber()) + "já existe");
         }
 
-        user.setRole(ERole.ORGANIZER);
+        //user.setRoles(ERole.ORGANIZER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
         userRepository.save(user);

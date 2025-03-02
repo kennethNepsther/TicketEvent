@@ -22,8 +22,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.ticketevent.constant.Constants.*;
-import static com.ticketevent.util.Helper.addIdToCurrentUrlPath;
 import static com.ticketevent.util.Helper.stringToUUID;
+import static com.ticketevent.util.UrlUtils.addIdToCurrentUrlPath;
+
 
 @Slf4j
 @RestController
@@ -37,7 +38,7 @@ public class UserController {
     final IVerificationTokenRepository verificationTokenRepository;
 
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<UserResponse>> findAll() {
         List<UserEntity> users = userService.getAllUsers();
         return ResponseEntity.ok(users.stream().map(UserResponse::new).toList());
@@ -45,7 +46,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/id/{userId}")
     public ResponseEntity<UserEntity> findById(@PathVariable String userId) {
         Optional<UserEntity> user = userService.getUserById(stringToUUID(userId));
         return ResponseEntity.ok((user).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE)));
@@ -65,17 +66,15 @@ public class UserController {
 
 
 
-    @PostMapping("/organizer")
+    @PostMapping("/save")
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserCreateRequestDto request, final HttpServletRequest httpRequest) {
         try {
             var user = new UserEntity();
             BeanUtils.copyProperties(request, user);
-            userService.createUserOrganizer(user, httpRequest);
+            userService.createUser(user, httpRequest);
             URI uri = addIdToCurrentUrlPath(user.getUserId().toString());
 
-            return ResponseEntity.created(uri)
-                    .body("Utilizador  ".concat(user.getLastName()).concat(user.getLastName()) + " salvo com  successo");
-
+            return ResponseEntity.created(uri).body(USER_SAVE_SUCCESSFULLY_MESSAGE);
         } catch (DataIntegrityViolationException e) {
             log.error(ERROR_ON_CREATE_USER, e);
             throw new DataIntegrityViolationException(USER_ALREADY_EXIST_MESSAGE);
@@ -96,4 +95,18 @@ public class UserController {
         }
         return INVALID_TOKEN_MESSAGE;
     }
+
+    @GetMapping("/resendVerificationToken")
+    public String resendVerificationToken(@RequestParam("token") String oldToken, final HttpServletRequest request){
+        var verificationToken = userService.generateNewVerificationToken(oldToken);
+        var user = verificationToken.getUser();
+       // mailService.resendVerificationEmail(user, applicationUrl(request), verificationToken);
+        return NEW_VERIFICATION_TOKEN_MESSAGE;
+
+
+    }
+
+
+
+
 }

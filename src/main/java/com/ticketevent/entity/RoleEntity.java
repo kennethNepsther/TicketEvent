@@ -14,13 +14,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_roles")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoleEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    @Enumerated(EnumType.STRING)
-    private ERole name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long roleId;
+    private String name;
+    //@Enumerated(EnumType.STRING)
+   // private ERole name;
 
 
 

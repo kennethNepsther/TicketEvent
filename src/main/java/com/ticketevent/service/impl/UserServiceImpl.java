@@ -3,6 +3,7 @@ package com.ticketevent.service.impl;
 import com.ticketevent.entity.UserEntity;
 import com.ticketevent.enums.ERole;
 import com.ticketevent.event.RegistrationCompleteEvent;
+import com.ticketevent.repository.IRoleRepository;
 import com.ticketevent.repository.IUserRepository;
 import com.ticketevent.repository.IVerificationTokenRepository;
 import com.ticketevent.service.IUserService;
@@ -13,16 +14,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
-import static com.ticketevent.constant.Constants.INVALID_TOKEN_MESSAGE;
-import static com.ticketevent.constant.Constants.TOKEN_ALREADY_EXPIRED;
+import static com.ticketevent.constant.Constants.*;
+import static com.ticketevent.util.UrlUtils.applicationUrl;
 
 @Slf4j
 @Service
@@ -30,7 +28,8 @@ import static com.ticketevent.constant.Constants.TOKEN_ALREADY_EXPIRED;
 @Transactional(rollbackOn = Exception.class)
 public class UserServiceImpl implements IUserService {
     final IUserRepository userRepository;
-    final PasswordEncoder passwordEncoder;
+    final IRoleRepository roleRepository;
+    final BCryptPasswordEncoder passwordEncoder;
     final IVerificationTokenRepository tokenRepository;
     final ApplicationEventPublisher publisher;
 
@@ -47,7 +46,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Optional<UserEntity> getUserByEmail(String email) {
-        return userRepository.findByEmail(email.toLowerCase());
+        return userRepository.findByEmailIgnoreCase(email.toLowerCase());
     }
 
     @Override
@@ -56,40 +55,39 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void createUserAdmin(UserEntity user) {
-        if (getUserByEmail(user.getEmail()).isPresent()) {
-            throw new DataIntegrityViolationException("O email ".concat(user.getEmail()) + " já existe");
+    public void createAdmin(UserEntity userAdmin) {
+        if (getUserByEmail(userAdmin.getEmail()).isPresent()) {
+            throw new DataIntegrityViolationException(USER_ALREADY_EXISTS_WITH_EMAIL);
         }
-        if (getUserByPhoneNumber(user.getPhoneNumber()).isPresent()) {
-            throw new DataIntegrityViolationException("O número de telefone".concat(user.getPhoneNumber()) + "já existe");
+        if (getUserByPhoneNumber(userAdmin.getPhoneNumber()).isPresent()) {
+            throw new DataIntegrityViolationException(USER_ALREADY_EXISTS_WITH_EMAIL);
         }
-
-        user.setRole(ERole.ADMIN);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        var roleUser = roleRepository.findByName(ERole.ADMIN.name());
+        userAdmin.setRoles(Set.of(roleUser));
+        userAdmin.setPassword(passwordEncoder.encode(userAdmin.getPassword()));
+        userRepository.save(userAdmin);
 
     }
 
     @Override
-    public void createUserOrganizer(UserEntity user, HttpServletRequest request) {
+    public void createUser(UserEntity user, HttpServletRequest request) {
 
         if (getUserByEmail(user.getEmail()).isPresent()) {
-            throw new DataIntegrityViolationException("O email ".concat(user.getEmail()) + " já existe");
+            throw new DataIntegrityViolationException(USER_ALREADY_EXISTS_WITH_EMAIL);
         }
         if (getUserByPhoneNumber(user.getPhoneNumber()).isPresent()) {
-            throw new DataIntegrityViolationException("O número de telefone".concat(user.getPhoneNumber()) + "já existe");
+            throw new DataIntegrityViolationException(USER_ALREADY_EXISTS_WITH_PHONE);
         }
+        var roleUser = roleRepository.findByName(ERole.USER.name());
 
-        user.setRole(ERole.ORGANIZER);
+        user.setRoles(Set.of(roleUser));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
         userRepository.save(user);
 
     }
 
-    public String applicationUrl(HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-    }
+
 
     @Override
     public void saveUserVerificationToken(UserEntity user, String token) {
@@ -114,6 +112,18 @@ public class UserServiceImpl implements IUserService {
         userRepository.save(user);
         return "valid";
     }
+
+    @Override
+    public VerificationTokenEntity generateNewVerificationToken(String oldToken) {
+
+        var oldTokenToRenew = tokenRepository.findByToken(oldToken);
+        var verificationTokenTime = new VerificationTokenEntity();
+        oldTokenToRenew.setToken(UUID.randomUUID().toString());
+        oldTokenToRenew.setExpirationTime(verificationTokenTime.getExpirationTime());
+        return tokenRepository.save(oldTokenToRenew);
+    }
+
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.ticketevent.service;
 
 import com.ticketevent.entity.UserEntity;
+import com.ticketevent.entity.token.VerificationTokenEntity;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -13,8 +14,10 @@ public interface IUserService {
     Optional<UserEntity> getUserById(UUID userId);
     Optional<UserEntity> getUserByEmail(String email);
     Optional<UserEntity> getUserByPhoneNumber(String phoneNumber);
-    void createUserAdmin(UserEntity user);
-    void createUserOrganizer(UserEntity user,  final HttpServletRequest request);
+    void createAdmin(UserEntity user);
+    void createUser(UserEntity user, final HttpServletRequest request);
     void saveUserVerificationToken(UserEntity user, String verificationToken);
     String validateToken(String theToken);
+
+    VerificationTokenEntity generateNewVerificationToken(String oldToken);
 }

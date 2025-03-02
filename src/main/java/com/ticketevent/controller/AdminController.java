@@ -72,7 +72,7 @@ public class AdminController {
 
             var user = new UserEntity();
             BeanUtils.copyProperties(request, user);
-            userService.createUserAdmin(user);
+            userService.createAdmin(user);
             URI uri = addIdToCurrentUrlPath(user.getUserId().toString());
             return ResponseEntity.created(uri).body(user);
 

@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ERole {
     ADMIN(1L),
-    ORGANIZER(2L);
+    USER(2L);
 
    final long roleId;
 

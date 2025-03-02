@@ -17,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Profile("dev")
@@ -66,14 +65,14 @@ public class DevConfig {
     private Set<RoleEntity> createInitialRoles() {
         return new HashSet<>(Arrays.asList(
                 new RoleEntity(null, ERole.ADMIN.name()),
-                new RoleEntity(null, ERole.ORGANIZER.name())
+                new RoleEntity(null, ERole.USER.name())
 
         ));
     }
 
     private Set<UserEntity> createInitialUsers(Set<RoleEntity> roles) {
         RoleEntity adminRole = getRoleByName(roles, ERole.ADMIN.name());
-        RoleEntity organizerRole = getRoleByName(roles, ERole.ORGANIZER.name());
+        RoleEntity organizerRole = getRoleByName(roles, ERole.USER.name());
 
 
         return new HashSet<>(Arrays.asList(

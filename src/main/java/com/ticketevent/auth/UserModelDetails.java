@@ -38,7 +38,7 @@ public class UserModelDetails implements UserDetails {
                     new SimpleGrantedAuthority("ROLE_PARTICIPANT"),
                     new SimpleGrantedAuthority("ROLE_ORGANIZER"));
         }
-        if (this.roles == ERole.ORGANIZER){
+        if (this.roles == ERole.USER){
             return List.of(new SimpleGrantedAuthority("ROLE_ORGANIZER"),
                     new SimpleGrantedAuthority("ROLE_PARTICIPANT"));
 

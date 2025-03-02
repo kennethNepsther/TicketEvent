@@ -14,8 +14,8 @@ public interface IUserService {
     Optional<UserEntity> getUserById(UUID userId);
     Optional<UserEntity> getUserByEmail(String email);
     Optional<UserEntity> getUserByPhoneNumber(String phoneNumber);
-    void createUserAdmin(UserEntity user);
-    void createUserOrganizer(UserEntity user,  final HttpServletRequest request);
+    void createAdmin(UserEntity user);
+    void createUser(UserEntity user, final HttpServletRequest request);
     void saveUserVerificationToken(UserEntity user, String verificationToken);
     String validateToken(String theToken);
 

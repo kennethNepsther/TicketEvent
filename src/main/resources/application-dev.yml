@@ -9,7 +9,7 @@ DATABASE_HOST: localhost
 DATABASE_PORT: 3306
 JDBC_CONNECTION: jdbc:mysql
 #DATABASE_DIALECT: org.hibernate.dialect.MySQLDialect
-DDL_AUTO: create-drop
+DDL_AUTO: create
 DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
 #  sql:
 #   init:

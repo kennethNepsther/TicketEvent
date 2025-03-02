@@ -48,7 +48,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/id/{userId}")
     public ResponseEntity<UserEntity> findById(@PathVariable String userId) {
         Optional<UserEntity> user = userService.getUserById(stringToUUID(userId));
         return ResponseEntity.ok((user).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE)));
@@ -68,17 +68,15 @@ public class UserController {
 
 
 
-    @PostMapping("/organizer")
+    @PostMapping("/save")
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserCreateRequestDto request, final HttpServletRequest httpRequest) {
         try {
             var user = new UserEntity();
             BeanUtils.copyProperties(request, user);
-            userService.createUserOrganizer(user, httpRequest);
+            userService.createUser(user, httpRequest);
             URI uri = addIdToCurrentUrlPath(user.getUserId().toString());
 
-            return ResponseEntity.created(uri)
-                    .body("Utilizador  ".concat(user.getLastName()).concat(user.getLastName()) + " salvo com  successo");
-
+            return ResponseEntity.created(uri).body(USER_SAVE_SUCCESSFULLY_MESSAGE);
         } catch (DataIntegrityViolationException e) {
             log.error(ERROR_ON_CREATE_USER, e);
             throw new DataIntegrityViolationException(USER_ALREADY_EXIST_MESSAGE);
@@ -104,7 +102,6 @@ public class UserController {
     public String resendVerificationToken(@RequestParam("token") String oldToken, final HttpServletRequest request){
         var verificationToken = userService.generateNewVerificationToken(oldToken);
         var user = verificationToken.getUser();
-
        // mailService.resendVerificationEmail(user, applicationUrl(request), verificationToken);
         return NEW_VERIFICATION_TOKEN_MESSAGE;
 

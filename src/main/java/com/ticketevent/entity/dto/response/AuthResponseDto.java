@@ -1,4 +1,8 @@
 package com.ticketevent.entity.dto.response;
 
-public class AuthResponseDto {
-}
+public record AuthResponseDto (String accessToken, long expiresIn){}
+
+
+
+
+

@@ -1,5 +1,7 @@
 package com.ticketevent.service.impl;
 
+import com.ticketevent.entity.UserEntity;
+import com.ticketevent.entity.token.VerificationTokenEntity;
 import com.ticketevent.service.IEmailService;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -86,7 +88,29 @@ public class EmailServiceImpl implements IEmailService {
 
     }
 
+    @Override
+    public void resendVerificationEmail(UserEntity user, String applicationUrl, VerificationTokenEntity verificationToken) {
+        String verificationUrl = applicationUrl + "/user/verifyEmail/account?token="+verificationToken;
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            var messageHelper = new MimeMessageHelper(message);
+            messageHelper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+            messageHelper.setFrom(fromEmail);
+            messageHelper.setTo(user.getEmail());
+            messageHelper.setText(mailContentVerification(user.getFirstName(), host, verificationUrl),true);
+            mailSender.send(message);
+
+        }catch (Exception e) {
+
+            throw new RuntimeException(ERROR_SENDING_VERIFICATION_EMAIL);
+
+        }
+
     }
+
+
+}
 
 
 

@@ -6,7 +6,6 @@ import com.ticketevent.entity.dto.response.UserResponse;
 import com.ticketevent.entity.token.VerificationTokenEntity;
 import com.ticketevent.exceptions.exception.ObjectNotFoundException;
 import com.ticketevent.repository.IVerificationTokenRepository;
-import com.ticketevent.service.IEmailService;
 import com.ticketevent.service.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +35,6 @@ import static com.ticketevent.util.UrlUtils.addIdToCurrentUrlPath;
 public class UserController {
 
     final IUserService userService;
-    final IEmailService mailService;
     final IVerificationTokenRepository verificationTokenRepository;
 
 
@@ -68,7 +66,7 @@ public class UserController {
 
 
 
-    @PostMapping("/save")
+    @PostMapping("/organizer")
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserCreateRequestDto request, final HttpServletRequest httpRequest) {
         try {
             var user = new UserEntity();

@@ -6,6 +6,7 @@ import com.ticketevent.entity.dto.response.UserResponse;
 import com.ticketevent.exceptions.exception.ObjectNotFoundException;
 import com.ticketevent.service.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.ticketevent.constant.Constants.*;
+import static com.ticketevent.util.Helper.addIdToCurrentUrlPath;
 import static com.ticketevent.util.Helper.stringToUUID;
-import static com.ticketevent.util.UrlUtils.addIdToCurrentUrlPath;
 
 @Slf4j
 @RestController

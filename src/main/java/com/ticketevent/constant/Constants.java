@@ -19,12 +19,20 @@ public class Constants {
 
     public static final String ACCOUNT_SUCCESSFULLY_VERIFIED_MESSAGE = "E-mail verificado com sucesso. Agora pode aceder à sua conta";
     public static final String TOKEN_ALREADY_EXPIRED = "Token já expirado";
+<<<<<<< HEAD
     public static final String NEW_VERIFICATION_TOKEN_MESSAGE = "Novo token de verificação enviado para o seu e-mail";
     public static final String USER_ALREADY_EXIST_MESSAGE=  "O EMAIL OU TELEFONE JÁ EXISTE";
 
 
     public static final String[] UN_SECURED_URLs = {"/login", "/user/all", "/user/save", "/events/**"};
     public static final String[] ADMIN_WHITELIST = {"/admin/**", "/user/**"};
+=======
+
+
+
+
+    public static final String USER_ALREADY_EXIST_MESSAGE=  "Erro ao salvar utilizador, o email ou o número de telefone já existe";
+>>>>>>> ba75cdefcc99dce1b3bca46f5d1fb45b6b43b099
 
 
 

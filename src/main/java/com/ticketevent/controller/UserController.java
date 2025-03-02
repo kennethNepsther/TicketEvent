@@ -66,7 +66,7 @@ public class UserController {
 
 
 
-    @PostMapping("/organizer")
+    @PostMapping("/save")
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserCreateRequestDto request, final HttpServletRequest httpRequest) {
         try {
             var user = new UserEntity();

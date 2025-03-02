@@ -1,5 +1,7 @@
 package com.ticketevent.service.impl;
 
+import com.ticketevent.entity.UserEntity;
+import com.ticketevent.entity.token.VerificationTokenEntity;
 import com.ticketevent.service.IEmailService;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -86,7 +88,13 @@ public class EmailServiceImpl implements IEmailService {
 
     }
 
+    @Override
+    public void resendVerificationEmail(UserEntity user, String applicationUrl, VerificationTokenEntity verificationToken) {
+
     }
+
+
+}
 
 
 

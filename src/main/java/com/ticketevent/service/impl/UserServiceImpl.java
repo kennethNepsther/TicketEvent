@@ -1,6 +1,5 @@
 package com.ticketevent.service.impl;
 
-import com.ticketevent.entity.RoleEntity;
 import com.ticketevent.entity.UserEntity;
 import com.ticketevent.enums.ERole;
 import com.ticketevent.event.RegistrationCompleteEvent;

@@ -1,6 +1,8 @@
-package com.ticketevent.auth;
+package com.ticketevent.auth.spring;
 
 import com.ticketevent.entity.UserEntity;
+import com.ticketevent.entity.dto.request.AuthRequestDto;
+import com.ticketevent.entity.dto.response.AuthResponseDto;
 import com.ticketevent.enums.ERole;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,5 +62,11 @@ public class UserModelDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public static interface IAuthService {
+        AuthResponseDto authenticate(AuthRequestDto authRequestDto);
+
+
     }
 }

@@ -72,15 +72,15 @@ public class DevConfig {
 
     private Set<UserEntity> createInitialUsers(Set<RoleEntity> roles) {
         RoleEntity adminRole = getRoleByName(roles, ERole.ADMIN.name());
-        RoleEntity organizerRole = getRoleByName(roles, ERole.USER.name());
+        RoleEntity userRole = getRoleByName(roles, ERole.USER.name());
 
 
         return new HashSet<>(Arrays.asList(
-                new UserEntity(null, "admin","user","934260018",
-                        passwordEncoder.encode("admin123"), "admin@email.com",true,true, Set.of(adminRole, organizerRole)),
+                new UserEntity(null, "kenneth","luzolo","934260018",
+                        passwordEncoder.encode("admin123"), "admin@email.com",true,true, Set.of(adminRole)),
 
-                new UserEntity(null, "organizer","user","934260019",
-                        passwordEncoder.encode("organizer123"), "organizer@email.com",true,true, Set.of(organizerRole))
+                new UserEntity(null, "Junior","luzolo","934260019",
+                        passwordEncoder.encode("user123"), "organizer@email.com",true,true, Set.of(userRole))
         ));
     }
 

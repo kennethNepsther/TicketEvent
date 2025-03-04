@@ -11,6 +11,8 @@ import java.util.UUID;
 public interface IUserService {
 
     List<UserEntity> getAllUsers();
+    List<UserEntity> getAllUserAdmin();
+
     Optional<UserEntity> getUserById(UUID userId);
     Optional<UserEntity> getUserByEmail(String email);
     Optional<UserEntity> getUserByPhoneNumber(String phoneNumber);

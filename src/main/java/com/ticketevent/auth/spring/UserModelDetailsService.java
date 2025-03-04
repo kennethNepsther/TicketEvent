@@ -1,4 +1,4 @@
-package com.ticketevent.auth;
+package com.ticketevent.auth.spring;
 
 import com.ticketevent.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;

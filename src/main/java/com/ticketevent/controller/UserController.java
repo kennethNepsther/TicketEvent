@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -32,6 +34,7 @@ import static com.ticketevent.util.UrlUtils.addIdToCurrentUrlPath;
 @Tag(name = "utilizador")
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
+//@EnableMethodSecurity
 public class UserController {
 
     final IUserService userService;
@@ -46,24 +49,11 @@ public class UserController {
 
     }
 
-    @GetMapping("/id/{userId}")
+    @GetMapping("/find/{userId}")
     public ResponseEntity<UserEntity> findById(@PathVariable String userId) {
         Optional<UserEntity> user = userService.getUserById(stringToUUID(userId));
         return ResponseEntity.ok((user).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE)));
     }
-
-    @GetMapping("/email/{email}")
-    public ResponseEntity<UserEntity> findByEmail(@PathVariable String email) {
-        Optional<UserEntity> user = userService.getUserByEmail(email);
-        return ResponseEntity.ok((user).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE)));
-    }
-
-    @GetMapping("/phone/{phoneNumber}")
-    public ResponseEntity<UserEntity> findByPhoneNumber(@PathVariable String phoneNumber) {
-        Optional<UserEntity> user = userService.getUserByPhoneNumber(phoneNumber);
-        return ResponseEntity.ok((user).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE)));
-    }
-
 
 
     @PostMapping("/save")
@@ -97,6 +87,7 @@ public class UserController {
     }
 
     @GetMapping("/resendVerificationToken")
+   // @PreAuthorize("hasRole('USER')")
     public String resendVerificationToken(@RequestParam("token") String oldToken, final HttpServletRequest request){
         var verificationToken = userService.generateNewVerificationToken(oldToken);
         var user = verificationToken.getUser();
@@ -105,6 +96,7 @@ public class UserController {
 
 
     }
+
 
 
 

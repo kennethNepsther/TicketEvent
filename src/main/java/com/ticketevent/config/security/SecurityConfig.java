@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,14 +21,16 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import static com.ticketevent.constant.Constants.UN_SECURED_URLs;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
+import static com.ticketevent.constant.Constants.*;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+//@EnableMethodSecurity
 public class SecurityConfig {
     @Value("${spring.security.oauth2.resource server.jwt.public-key-location}")
     private RSAPublicKey publicKey;
@@ -37,7 +40,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder () {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -50,10 +53,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                                .requestMatchers(UN_SECURED_URLs).permitAll()
-                                .anyRequest().authenticated()                                
-                                
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                       .requestMatchers(UN_SECURED_URLs).permitAll()
+                       .requestMatchers(USER_WHITELIST).hasAuthority("SCOPE_USER")
+                        .requestMatchers(USER_WHITELIST).hasRole("USER")
+                       .requestMatchers(ADMIN_WHITELIST).hasAuthority("SCOPE_ADMIN")
+                        .requestMatchers(ADMIN_WHITELIST).hasRole("ADMIN")
+                        .anyRequest().authenticated()
+
 
                 )
 
@@ -72,8 +79,6 @@ public class SecurityConfig {
         var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
     }
-
-
 
 
 }

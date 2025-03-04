@@ -36,8 +36,15 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+       // return userRepository.findAll();
+        return userRepository.findAllUsers();
     }
+
+    @Override
+    public List<UserEntity> getAllUserAdmin() {
+        return userRepository.findAllAdmins();
+    }
+
 
     @Override
     public Optional<UserEntity> getUserById(UUID userId) {

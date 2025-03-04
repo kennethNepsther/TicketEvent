@@ -34,14 +34,21 @@ public class AdminController {
     final IUserService userService;
 
 
-    @GetMapping
-    public ResponseEntity<List<UserResponse>> findAll() {
+    @GetMapping("/users")
+    public ResponseEntity<List<UserResponse>> findAllUsers() {
         List<UserEntity> users = userService.getAllUsers();
         return ResponseEntity.ok(users.stream().map(UserResponse::new).toList());
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/allAdmins")
+    public ResponseEntity<List<UserResponse>> findAllAdminUsers() {
+        List<UserEntity> users = userService.getAllUserAdmin();
+        return ResponseEntity.ok(users.stream().map(UserResponse::new).toList());
+
+    }
+
+    @GetMapping("/find/{userId}")
     public ResponseEntity<UserEntity> findById(@PathVariable String userId) {
         Optional<UserEntity> user = userService.getUserById(stringToUUID(userId));
         return ResponseEntity.ok((user).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE)));
@@ -59,7 +66,9 @@ public class AdminController {
         return ResponseEntity.ok((user).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE)));
     }
 
-    @PostMapping
+
+
+    @PostMapping("/save")
     public ResponseEntity<UserEntity> createUserAdmin(@Valid @RequestBody UserCreateRequestDto request) {
         try {
             if (userService.getUserByEmail(request.email()).isPresent()){
@@ -82,6 +91,8 @@ public class AdminController {
         }
 
     }
+
+
 
 
 }

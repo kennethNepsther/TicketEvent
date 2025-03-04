@@ -1,16 +1,18 @@
-package com.ticketevent.service.impl;
+package com.ticketevent.auth.service;
 
+import com.ticketevent.entity.RoleEntity;
 import com.ticketevent.entity.dto.request.AuthRequestDto;
 import com.ticketevent.entity.dto.response.AuthResponseDto;
 import com.ticketevent.exceptions.exception.BadCredentialException;
 import com.ticketevent.repository.IUserRepository;
-import com.ticketevent.service.IAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 import static com.ticketevent.constant.Constants.USER_NOT_VERIFIED_MESSAGE;
 import static com.ticketevent.constant.Constants.WRONG_CREDENTIALS_MESSAGE;
@@ -35,10 +37,16 @@ public class AuthServiceImpl implements IAuthService {
             throw new BadCredentialException(USER_NOT_VERIFIED_MESSAGE);
         }
         var expiresIn = 300L;
+
+        var scopes = user.get().getRoles().stream()
+                .map(RoleEntity::getName).collect(Collectors.joining(" "));
+
+
         var claims = JwtClaimsSet.builder()
                 .issuer("ticket-event")
                 .subject(user.get().getUserId().toString())
                 .expiresAt(now().plusSeconds(expiresIn))
+                .claim("scope", scopes)
                 .build();
 
         var token = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

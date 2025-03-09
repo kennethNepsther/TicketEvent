@@ -14,35 +14,34 @@ import java.util.UUID;
 public class EventResponseDto {
     private UUID eventId;
     private String eventName;
-    private String imagePath;
-    private String eventDescription;
-    private String eventLocation;
-    private String organizerName;
-    private String organizerContact;
-    private BigDecimal eventPrice;
-    private Integer totalCapacity;
-    private Integer registeredParticipants;
-    private Boolean isActive;
-    private EventCategory eventCategory;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate eventDate;
     private LocalTime startTime;
-    private LocalTime endTime;
+    private String eventAddress;
+    private BigDecimal eventPrice;
+    //private Integer totalCapacity;
+    private String eventDescription;
+    private EventCategory eventCategory;
+    private String eventProvinceLocation;
+   // private Integer registeredParticipants;
+    private Boolean isActive;
+    private  byte[] imagePath;
 
 
     public EventResponseDto(EventEntity eventEntity) {
         this.eventId = eventEntity.getEventId();
         this.eventName = eventEntity.getEventName();
-        this.eventDescription = eventEntity.getEventDescription();
-        this.eventLocation = eventEntity.getEventLocation();
-        this.imagePath = eventEntity.getImagePath();
-        this.eventPrice = eventEntity.getEventPrice();
-        this.totalCapacity = eventEntity.getTotalCapacity();
-        this.eventCategory = eventEntity.getEventCategory();
-        this.registeredParticipants = eventEntity.getRegisteredParticipants();
-        this.isActive = eventEntity.getIsActive();
         this.eventDate = eventEntity.getEventDate();
         this.startTime = eventEntity.getStartTime();
+        this.eventPrice = eventEntity.getEventPrice();
+        this.eventAddress = eventEntity.getEventAddress();
+       // this.totalCapacity = eventEntity.getTotalCapacity();
+        this.eventCategory = eventEntity.getEventCategory();
+        this.eventDescription = eventEntity.getEventDescription();
+        this.eventProvinceLocation = eventEntity.getEventProvinceLocation();
+       // this.registeredParticipants = eventEntity.getRegisteredParticipants();
+        this.isActive = eventEntity.getIsActive();
+        this.imagePath = eventEntity.getImageData();
 
     }
 }

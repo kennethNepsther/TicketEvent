@@ -54,10 +54,10 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                       .requestMatchers(UN_SECURED_URLs).permitAll()
-                       .requestMatchers(USER_WHITELIST).hasAuthority("SCOPE_USER")
+                        .requestMatchers(UN_SECURED_URLs).permitAll()
+                        .requestMatchers(USER_WHITELIST).hasAuthority("SCOPE_USER")
                         .requestMatchers(USER_WHITELIST).hasRole("USER")
-                       .requestMatchers(ADMIN_WHITELIST).hasAuthority("SCOPE_ADMIN")
+                        .requestMatchers(ADMIN_WHITELIST).hasAuthority("SCOPE_ADMIN")
                         .requestMatchers(ADMIN_WHITELIST).hasRole("ADMIN")
                         .anyRequest().authenticated()
 

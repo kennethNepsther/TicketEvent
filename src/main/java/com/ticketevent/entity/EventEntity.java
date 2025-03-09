@@ -8,12 +8,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -32,9 +33,9 @@ public class EventEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID eventId;
     private String eventName;
-    private String imagePath;
     private String eventDescription;
-    private String eventLocation;
+    private String eventAddress;
+    private String eventProvinceLocation;
     private BigDecimal eventPrice = BigDecimal.ZERO;
     private Integer totalCapacity;
     private Integer registeredParticipants = 0;
@@ -45,14 +46,23 @@ public class EventEntity implements Serializable {
     private LocalDate eventDate;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
-    @Lob
-    @Column(name = "imagedata")
-    private byte[] imageData;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+   /* @Lob
+    @Column(name = "image_path")
+    private byte[] imagePath;*/
+   @Lob
+    @Column(name = "image_data" ,length = 10000000)
+    private byte[] ImageData;
+
+
+    @CreatedDate
+    private Instant createdAt;
+    @CreatedDate
+    private Instant updatedAt;
 
     /*@ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "organizerId", nullable = false)
     private UserEntity organizer;*/
+
+
 
 }

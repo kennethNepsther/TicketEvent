@@ -1,6 +1,7 @@
 package com.ticketevent.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ticketevent.enums.EProvinces;
 import com.ticketevent.enums.EventCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class EventEntity implements Serializable {
     private String eventName;
     private String eventDescription;
     private String eventAddress;
-    private String eventProvinceLocation;
+    private EProvinces province;
     private BigDecimal eventPrice = BigDecimal.ZERO;
     private Integer totalCapacity;
     private Integer registeredParticipants = 0;

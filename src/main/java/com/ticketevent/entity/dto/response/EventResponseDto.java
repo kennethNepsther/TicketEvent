@@ -1,6 +1,7 @@
 package com.ticketevent.entity.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ticketevent.enums.EProvinces;
 import com.ticketevent.enums.EventCategory;
 import com.ticketevent.entity.EventEntity;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class EventResponseDto {
     //private Integer totalCapacity;
     private String eventDescription;
     private EventCategory eventCategory;
-    private String eventProvinceLocation;
+    private EProvinces province;
    // private Integer registeredParticipants;
     private Boolean isActive;
     private  byte[] imagePath;
@@ -38,7 +39,7 @@ public class EventResponseDto {
        // this.totalCapacity = eventEntity.getTotalCapacity();
         this.eventCategory = eventEntity.getEventCategory();
         this.eventDescription = eventEntity.getEventDescription();
-        this.eventProvinceLocation = eventEntity.getEventProvinceLocation();
+        this.province = eventEntity.getProvince();
        // this.registeredParticipants = eventEntity.getRegisteredParticipants();
         this.isActive = eventEntity.getIsActive();
         this.imagePath = eventEntity.getImageData();

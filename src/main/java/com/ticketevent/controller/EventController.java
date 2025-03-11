@@ -1,8 +1,8 @@
 package com.ticketevent.controller;
 
 import com.ticketevent.entity.EventEntity;
-import com.ticketevent.entity.UserEntity;
 import com.ticketevent.entity.dto.response.EventResponseDto;
+import com.ticketevent.enums.EProvinces;
 import com.ticketevent.enums.EventCategory;
 import com.ticketevent.exceptions.exception.ObjectNotFoundException;
 import com.ticketevent.service.IEventService;
@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +56,23 @@ public class EventController {
         return ResponseEntity.ok((event).orElseThrow(() -> new ObjectNotFoundException(EVENT_NOT_FOUND_MESSAGE)));
     }
 
+    @GetMapping("/searchCategory")
+    public ResponseEntity<List<EventEntity>> getEventsByCategory(
+            @RequestParam(required = false) String category) {
+        List<EventEntity> events = eventService.searchEventsByCategory(category.toUpperCase());
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/searchParams")
+    public ResponseEntity<List<EventEntity>> getEvents(
+            @RequestParam(required = false) String eventName,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate eventDate,
+            @RequestParam(required = false) String province) {
+
+        List<EventEntity> events = eventService.searchEventsByParams(eventName, eventDate, province);
+        return ResponseEntity.ok(events);
+    }
+
 
     @PostMapping(value = "/save", consumes = {"multipart/form-data"})
     public ResponseEntity<Object> createEvent(@RequestParam("eventName") String eventName,
@@ -62,7 +80,7 @@ public class EventController {
                                               @RequestParam("eventDate") String eventDate,
                                               @RequestParam("eventPrice") Double eventPrice,
                                               @RequestParam("eventAddress") String eventAddress,
-                                              @RequestParam("eventProvinceLocation") String eventProvinceLocation,
+                                              @RequestParam("province") String province,
                                               @RequestParam("totalCapacity") Integer totalCapacity,
                                               @RequestParam("eventCategory") String eventCategory,
                                               @RequestParam("startTime") String startTime,
@@ -80,9 +98,9 @@ public class EventController {
         event.setEventDate(LocalDate.parse(eventDate));
         event.setEventPrice(BigDecimal.valueOf(eventPrice));
         event.setEventAddress(eventAddress);
-        event.setEventProvinceLocation(eventProvinceLocation);
+        event.setProvince(EProvinces.valueOf(province.toUpperCase()));
         event.setTotalCapacity(totalCapacity);
-        event.setEventCategory(EventCategory.valueOf(eventCategory));
+        event.setEventCategory(EventCategory.valueOf(eventCategory.toUpperCase()));
         event.setStartTime(LocalTime.parse(startTime));
         event.setImageData(image.getBytes());
 

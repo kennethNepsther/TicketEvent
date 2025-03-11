@@ -1,17 +1,38 @@
 package com.ticketevent.repository;
 
 import com.ticketevent.entity.EventEntity;
+import com.ticketevent.enums.EProvinces;
+import com.ticketevent.enums.EventCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 @Repository
 public interface IEventRepository extends JpaRepository<EventEntity, UUID> {
-   Optional<EventEntity> findByEventId(UUID eventId);
-  /* Optional<EventEntity> findByTitle(String title);
-   Optional<EventEntity> findByDescription(String description);
-   Optional<EventEntity> findByDate(String date);
-   Optional<EventEntity> findByLocation(String location);*/
+    Optional<EventEntity> findByEventId(UUID eventId);
+
+  /*  @Query("SELECT e FROM EventEntity e WHERE e.eventName LIKE %:eventName%")
+    List<EventEntity> findByEventName(String eventName);*/
+
+    @Query("SELECT e FROM EventEntity e WHERE " +
+            "(:eventName IS NULL OR LOWER(e.eventName) LIKE LOWER(CONCAT('%', :eventName, '%'))) AND " +
+            "(:province IS NULL OR e.province = :province) AND " +
+            "(:eventDate IS NULL OR e.eventDate = :eventDate)")
+    List<EventEntity> findByParams(
+            @Param("eventName") String eventName,
+            @Param("eventDate") LocalDate eventDate,
+            @Param("province") EProvinces province);
+
+
+    @Query("SELECT ev FROM EventEntity ev WHERE " +
+            "(:category IS NULL OR ev.eventCategory = :category)")
+    List<EventEntity> findByEveCategory(@Param("category") EventCategory category);
+
 
 }

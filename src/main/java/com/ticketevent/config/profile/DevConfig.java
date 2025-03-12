@@ -77,10 +77,10 @@ public class DevConfig {
 
         return new HashSet<>(Arrays.asList(
                 new UserEntity(null, "kenneth","luzolo","934260018",
-                        passwordEncoder.encode("admin123"), "admin@email.com",true,true, Set.of(adminRole)),
+                        passwordEncoder.encode("admin123"), "admin@email.com",true,true, Set.of(adminRole),null),
 
                 new UserEntity(null, "Junior","luzolo","934260019",
-                        passwordEncoder.encode("user123"), "organizer@email.com",true,true, Set.of(userRole))
+                        passwordEncoder.encode("user123"), "organizer@email.com",true,true, Set.of(userRole),null)
         ));
     }
 

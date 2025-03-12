@@ -1,9 +1,10 @@
 package com.ticketevent.service.impl;
 
+import com.ticketevent.auth.service.IAuthService;
 import com.ticketevent.entity.EventEntity;
+import com.ticketevent.entity.dto.response.EventDetailsProjection;
 import com.ticketevent.enums.EProvinces;
 import com.ticketevent.enums.EventCategory;
-import com.ticketevent.exceptions.exception.BadRequestException;
 import com.ticketevent.exceptions.exception.ObjectNotFoundException;
 import com.ticketevent.repository.IEventRepository;
 import com.ticketevent.service.IEventService;
@@ -24,6 +25,7 @@ import static com.ticketevent.constant.Constants.EVENT_NOT_FOUND_MESSAGE;
 @RequiredArgsConstructor
 public class EventServiceImpl implements IEventService {
     final IEventRepository eventRepository;
+    final IAuthService authService;
 
     @Override
     public List<EventEntity> getAllEvents() {
@@ -35,6 +37,8 @@ public class EventServiceImpl implements IEventService {
         return eventRepository.findByEventId(eventId);
     }
 
+
+
     @Override
     public List<EventEntity> searchEventsByCategory(String category) {
         try {
@@ -43,6 +47,11 @@ public class EventServiceImpl implements IEventService {
             throw  new ObjectNotFoundException(EVENT_NOT_FOUND_MESSAGE);
         }
 
+    }
+
+    @Override
+    public EventDetailsProjection getEventDetails(UUID eventId) {
+        return eventRepository.findEventDetailsById(eventId);
     }
 
 
@@ -60,6 +69,7 @@ public class EventServiceImpl implements IEventService {
     public EventEntity createEvent(EventEntity eventRequest, MultipartFile image, HttpServletRequest httpRequest) throws IOException {
 
         var event = new EventEntity();
+        event.setOrganizer(eventRequest.getOrganizer());
         event.setEventName(eventRequest.getEventName());
         event.setEventDescription(eventRequest.getEventDescription());
         event.setEventDate(eventRequest.getEventDate());

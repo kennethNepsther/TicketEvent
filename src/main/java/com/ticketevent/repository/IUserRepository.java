@@ -13,6 +13,7 @@ import java.util.UUID;
 public interface IUserRepository extends JpaRepository<UserEntity, UUID> {
     Optional<UserEntity> findByEmailIgnoreCase(String email);
     Optional<UserEntity> findUserEntityByUserId(UUID uuid);
+
     Optional<UserEntity> findUserEntityByPhoneNumber(String phoneNumber);
 
     @Query("SELECT u FROM UserEntity u JOIN u.roles r WHERE r.name = 'ADMIN'")
@@ -22,7 +23,7 @@ public interface IUserRepository extends JpaRepository<UserEntity, UUID> {
     @Query("SELECT u FROM UserEntity u JOIN u.roles r WHERE r.name = 'USER'")
     List<UserEntity> findAllUsers();
 
-
+    UserEntity findByUserId(UUID uuid);
 
 
 

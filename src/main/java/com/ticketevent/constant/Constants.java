@@ -37,7 +37,8 @@ public class Constants {
 
     // URLS
     public static final String[] UN_SECURED_URLs = {"/login","/user/save", "/user/verifyEmail/account",
-            "/user/resendVerificationToken", "/event/find/**", "/event/all","/event/searchParams","/event/searchCategory"};
+            "/user/resendVerificationToken", "/event/find/**", "/event/all","/event/details/**",
+            "/event/searchParams","/event/searchCategory"};
 
    public static final String[] ADMIN_WHITELIST = {"/admin/**", "/event/save"};
 

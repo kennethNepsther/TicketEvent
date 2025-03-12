@@ -15,10 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -66,13 +63,9 @@ public class UserEntity implements Serializable {
     }
 
 
-
-
-
-
-   /* * @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "organizer", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EventModel> events = new ArrayList<>();*/
+    private List<EventEntity> events = new ArrayList<>();
 
 
 }

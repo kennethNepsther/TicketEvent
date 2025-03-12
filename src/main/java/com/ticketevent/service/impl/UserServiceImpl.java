@@ -46,6 +46,9 @@ public class UserServiceImpl implements IUserService {
     }
 
 
+
+
+
     @Override
     public Optional<UserEntity> getUserById(UUID userId) {
         return userRepository.findUserEntityByUserId(userId);
@@ -128,6 +131,11 @@ public class UserServiceImpl implements IUserService {
         oldTokenToRenew.setToken(UUID.randomUUID().toString());
         oldTokenToRenew.setExpirationTime(verificationTokenTime.getExpirationTime());
         return tokenRepository.save(oldTokenToRenew);
+    }
+
+    @Override
+    public UserEntity getUserByIdFromToken(UUID user) {
+        return userRepository.findByUserId(user);
     }
 
 

@@ -36,6 +36,7 @@ public class EventEntity implements Serializable {
     private String eventName;
     private String eventDescription;
     private String eventAddress;
+    @Enumerated(EnumType.STRING)
     private EProvinces province;
     private BigDecimal eventPrice = BigDecimal.ZERO;
     private Integer totalCapacity;
@@ -47,23 +48,21 @@ public class EventEntity implements Serializable {
     private LocalDate eventDate;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
-   /* @Lob
-    @Column(name = "image_path")
-    private byte[] imagePath;*/
-   @Lob
-    @Column(name = "image_data" ,length = 10000000)
+    /* @Lob
+     @Column(name = "image_path")
+     private byte[] imagePath;*/
+    @Lob
+    @Column(name = "image_data", length = 10000000)
     private byte[] ImageData;
-
 
     @CreatedDate
     private Instant createdAt;
     @CreatedDate
     private Instant updatedAt;
 
-    /*@ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "organizerId", nullable = false)
-    private UserEntity organizer;*/
-
+    private UserEntity organizer;
 
 
 }

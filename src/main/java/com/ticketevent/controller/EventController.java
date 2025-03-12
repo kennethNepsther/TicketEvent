@@ -1,6 +1,7 @@
 package com.ticketevent.controller;
 
 import com.ticketevent.entity.EventEntity;
+import com.ticketevent.entity.dto.response.EventDetailsProjection;
 import com.ticketevent.entity.dto.response.EventResponseDto;
 import com.ticketevent.enums.EProvinces;
 import com.ticketevent.enums.EventCategory;
@@ -25,6 +26,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.ticketevent.constant.Constants.*;
 import static com.ticketevent.util.Helper.stringToUUID;
@@ -63,6 +65,12 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/details/{eventId}")
+    public ResponseEntity<EventDetailsProjection> getEventDetails(@PathVariable String eventId) {
+        EventDetailsProjection eventDetails = eventService.getEventDetails(stringToUUID(eventId));
+        return ResponseEntity.ok(eventDetails);
+    }
+
     @GetMapping("/searchParams")
     public ResponseEntity<List<EventEntity>> getEvents(
             @RequestParam(required = false) String eventName,
@@ -89,10 +97,11 @@ public class EventController {
                                               final HttpServletRequest httpRequest) throws IOException {
 
 
-        //var user = userService.getUserById(UUID.fromString(token.getName()));
+        var user = userService.getUserByIdFromToken(UUID.fromString(token.getName()));
 
 
         var event = new EventEntity();
+        event.setOrganizer(user);
         event.setEventName(eventName);
         event.setEventDescription(eventDescription);
         event.setEventDate(LocalDate.parse(eventDate));
